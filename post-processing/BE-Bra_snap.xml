@@ -1,0 +1,613 @@
+<graph id="Graph">
+    <version>1.0</version>
+    <node id="Read">
+        <operator>Read</operator>
+        <sources/>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <file>${sourceFile}</file>
+        </parameters>
+    </node>
+    <node id="S2Resampling">
+        <operator>S2Resampling</operator>
+        <sources>
+            <sourceProduct refid="Read"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resolution>20</resolution>
+            <upsampling>Nearest</upsampling>
+            <downsampling>Median</downsampling>
+            <flagDownsampling>First</flagDownsampling>
+            <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+        </parameters>
+    </node>
+    <node id="Subset">
+        <operator>Subset</operator>
+        <sources>
+            <sourceProduct refid="Reproject"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <sourceBands>B1,B2,B3,B4,B5,B6,B7,B8,B8A,B9,B11,B12,quality_aot,quality_wvp,quality_cloud_confidence,quality_snow_confidence,quality_scene_classification,view_zenith_mean,view_azimuth_mean,sun_zenith,sun_azimuth,view_zenith_B1,view_azimuth_B1,view_zenith_B2,view_azimuth_B2,view_zenith_B3,view_azimuth_B3,view_zenith_B4,view_azimuth_B4,view_zenith_B5,view_azimuth_B5,view_zenith_B6,view_azimuth_B6,view_zenith_B7,view_azimuth_B7,view_zenith_B8,view_azimuth_B8,view_zenith_B8A,view_azimuth_B8A,view_zenith_B9,view_azimuth_B9,view_zenith_B10,view_azimuth_B10,view_zenith_B11,view_azimuth_B11,view_zenith_B12,view_azimuth_B12</sourceBands>
+            <geoRegion>POLYGON ((4.51984 51.3255763056824,4.52265808105359 51.325489759205,4.52544899079977 51.3252309542374,4.52818582082362 51.3248023860985,4.53084218591649 51.3242081868201,4.53339247925882 51.3234540851722,4.53581211997308 51.322547351249,4.53807779062615 51.3214967261588,4.54016766236415 51.3203123375045,4.54206160548944 51.3190056014837,4.54374138343833 51.3175891125639,4.54519082828678 51.3160765218113,4.54639599609901 51.3144824050573,4.54734530063652 51.3128221221898,4.54802962416238 51.3111116689336,4.54844240430369 51.3093675225614,4.54857969617215 51.3076064830295,4.54844020918609 51.3058455110753,4.54802531828427 51.3041015648389,4.54733904947028 51.3023914365855,4.54638803987334 51.3007315910983,4.54518147275484 51.2991380072938,4.54373098812785 51.2976260245789,4.54205056988628 51.2962101954185,4.54015641056029 51.2949041455245,4.53806675502212 51.2937204429971,4.53580172466099 51.2926704776664,4.53338312372478 51.2917643517811,4.53083422968854 51.2910107830828,4.52817956965528 51.2904170211849,4.52544468492004 51.2899887780491,4.52265588593512 51.2897301732173,4.51984 51.2896436943176,4.51702411406488 51.2897301732173,4.51423531507996 51.2899887780491,4.51150043034472 51.2904170211849,4.50884577031146 51.2910107830828,4.50629687627522 51.2917643517811,4.50387827533901 51.2926704776664,4.50161324497788 51.2937204429971,4.49952358943971 51.2949041455245,4.49762943011372 51.2962101954185,4.49594901187215 51.2976260245789,4.49449852724516 51.2991380072938,4.49329196012666 51.3007315910983,4.49234095052972 51.3023914365855,4.49165468171573 51.3041015648389,4.49123979081391 51.3058455110753,4.49110030382785 51.3076064830295,4.49123759569631 51.3093675225614,4.49165037583762 51.3111116689336,4.49233469936348 51.3128221221898,4.49328400390099 51.3144824050573,4.49448917171322 51.3160765218113,4.49593861656168 51.3175891125639,4.49761839451056 51.3190056014837,4.49951233763586 51.3203123375045,4.50160220937385 51.3214967261588,4.50386788002692 51.322547351249,4.50628752074118 51.3234540851722,4.50883781408352 51.3242081868201,4.51149417917638 51.3248023860985,4.51423100920023 51.3252309542374,4.51702191894641 51.325489759205,4.51984 51.3255763056824))</geoRegion>
+            <subSamplingX>1</subSamplingX>
+            <subSamplingY>1</subSamplingY>
+            <fullSwath>false</fullSwath>
+            <tiePointGridNames/>
+            <copyMetadata>true</copyMetadata>
+        </parameters>
+    </node>
+    <node id="Bi2Op">
+        <operator>Bi2Op</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <greenFactor>1.0</greenFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <greenSourceBand>B3</greenSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="BiOp">
+        <operator>BiOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <greenFactor>1.0</greenFactor>
+            <redSourceBand>B4</redSourceBand>
+            <greenSourceBand>B3</greenSourceBand>
+        </parameters>
+    </node>
+    <node id="CiOp">
+        <operator>CiOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <greenFactor>1.0</greenFactor>
+            <redSourceBand>B4</redSourceBand>
+            <greenSourceBand>B3</greenSourceBand>
+        </parameters>
+    </node>
+    <node id="RiOp">
+        <operator>RiOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <greenFactor>1.0</greenFactor>
+            <redSourceBand>B4</redSourceBand>
+            <greenSourceBand>B3</greenSourceBand>
+        </parameters>
+    </node>
+    <node id="ArviOp">
+        <operator>ArviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <blueFactor>1.0</blueFactor>
+            <nirFactor>1.0</nirFactor>
+            <gammaParameter>1.0</gammaParameter>
+            <redSourceBand>B4</redSourceBand>
+            <blueSourceBand>B2</blueSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="DviOp">
+        <operator>DviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="GemiOp">
+        <operator>GemiOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8A</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="GndviOp">
+        <operator>GndviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <greenFactor>1.0</greenFactor>
+            <nirFactor>1.0</nirFactor>
+            <greenSourceBand>B3</greenSourceBand>
+            <nirSourceBand>B7</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="IpviOp">
+        <operator>IpviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="IreciOp">
+        <operator>IreciOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redB4Factor>1.0</redB4Factor>
+            <redB5Factor>1.0</redB5Factor>
+            <redB6Factor>1.0</redB6Factor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand4>B4</redSourceBand4>
+            <redSourceBand5>B5</redSourceBand5>
+            <redSourceBand6>B6</redSourceBand6>
+            <nirSourceBand>B7</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="McariOp">
+        <operator>McariOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <red1Factor>1.0</red1Factor>
+            <red2Factor>1.0</red2Factor>
+            <greenFactor>1.0</greenFactor>
+            <red1SourceBand>B4</red1SourceBand>
+            <red2SourceBand>B5</red2SourceBand>
+            <greenSourceBand>B3</greenSourceBand>
+        </parameters>
+    </node>
+    <node id="Msavi2Op">
+        <operator>Msavi2Op</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="MsaviOp">
+        <operator>MsaviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <slope>0.5</slope>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="MtciOp">
+        <operator>MtciOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redB4Factor>1.0</redB4Factor>
+            <redB5Factor>1.0</redB5Factor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand4>B4</redSourceBand4>
+            <redSourceBand5>B5</redSourceBand5>
+            <nirSourceBand>B6</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="Ndi45Op">
+        <operator>Ndi45Op</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redB4Factor>1.0</redB4Factor>
+            <redB5Factor>1.0</redB5Factor>
+            <redSourceBand4>B4</redSourceBand4>
+            <redSourceBand5>B5</redSourceBand5>
+        </parameters>
+    </node>
+    <node id="PssraOp">
+        <operator>PssraOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B7</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="PviOp">
+        <operator>PviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <angleSoilLineNIRAxis>45.0</angleSoilLineNIRAxis>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="ReipOp">
+        <operator>ReipOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redB4Factor>1.0</redB4Factor>
+            <redB5Factor>1.0</redB5Factor>
+            <redB6Factor>1.0</redB6Factor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand4>B4</redSourceBand4>
+            <redSourceBand5>B5</redSourceBand5>
+            <redSourceBand6>B6</redSourceBand6>
+            <nirSourceBand>B7</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="RviOp">
+        <operator>RviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="S2repOp">
+        <operator>S2repOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redB4Factor>1.0</redB4Factor>
+            <redB5Factor>1.0</redB5Factor>
+            <redB6Factor>1.0</redB6Factor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand4>B4</redSourceBand4>
+            <redSourceBand5>B5</redSourceBand5>
+            <redSourceBand6>B6</redSourceBand6>
+            <nirSourceBand>B7</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="SaviOp">
+        <operator>SaviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <soilCorrectionFactor>0.5</soilCorrectionFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="TndviOp">
+        <operator>TndviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="TsaviOp">
+        <operator>TsaviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <slope>0.5</slope>
+            <intercept>0.5</intercept>
+            <adjustment>0.08</adjustment>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="WdviOp">
+        <operator>WdviOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <resampleType>None</resampleType>
+            <upsampling/>
+            <downsampling/>
+            <redFactor>1.0</redFactor>
+            <nirFactor>1.0</nirFactor>
+            <slopeSoilLine>0.5</slopeSoilLine>
+            <redSourceBand>B4</redSourceBand>
+            <nirSourceBand>B8</nirSourceBand>
+        </parameters>
+    </node>
+    <node id="BiophysicalOp">
+        <operator>BiophysicalOp</operator>
+        <sources>
+            <sourceProduct refid="Subset"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <computeLAI>true</computeLAI>
+            <computeFapar>true</computeFapar>
+            <computeFcover>true</computeFcover>
+            <computeCab>true</computeCab>
+            <computeCw>true</computeCw>
+        </parameters>
+    </node>
+    <node id="BandMerge">
+        <operator>BandMerge</operator>
+        <sources>
+            <sourceProduct refid="Bi2Op"/>
+            <sourceProduct.1 refid="BiOp"/>
+            <sourceProduct.2 refid="CiOp"/>
+            <sourceProduct.3 refid="RiOp"/>
+            <sourceProduct.4 refid="ArviOp"/>
+            <sourceProduct.5 refid="DviOp"/>
+            <sourceProduct.6 refid="GemiOp"/>
+            <sourceProduct.7 refid="GndviOp"/>
+            <sourceProduct.8 refid="IpviOp"/>
+            <sourceProduct.9 refid="IreciOp"/>
+            <sourceProduct.10 refid="McariOp"/>
+            <sourceProduct.11 refid="Msavi2Op"/>
+            <sourceProduct.12 refid="MsaviOp"/>
+            <sourceProduct.13 refid="Subset"/>
+            <sourceProduct.14 refid="MtciOp"/>
+            <sourceProduct.15 refid="Ndi45Op"/>
+            <sourceProduct.16 refid="PssraOp"/>
+            <sourceProduct.17 refid="PviOp"/>
+            <sourceProduct.18 refid="ReipOp"/>
+            <sourceProduct.19 refid="RviOp"/>
+            <sourceProduct.20 refid="S2repOp"/>
+            <sourceProduct.21 refid="SaviOp"/>
+            <sourceProduct.22 refid="TndviOp"/>
+            <sourceProduct.23 refid="TsaviOp"/>
+            <sourceProduct.24 refid="WdviOp"/>
+            <sourceProduct.25 refid="BiophysicalOp"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <sourceBands/>
+            <geographicError>1.0E-5</geographicError>
+        </parameters>
+    </node>
+    <node id="Reproject">
+        <operator>Reproject</operator>
+        <sources>
+            <sourceProduct refid="S2Resampling"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <wktFile/>
+            <crs>GEOGCS[&quot;WGS84(DD)&quot;, 
+  DATUM[&quot;WGS84&quot;, 
+    SPHEROID[&quot;WGS84&quot;, 6378137.0, 298.257223563]], 
+  PRIMEM[&quot;Greenwich&quot;, 0.0], 
+  UNIT[&quot;degree&quot;, 0.017453292519943295], 
+  AXIS[&quot;Geodetic longitude&quot;, EAST], 
+  AXIS[&quot;Geodetic latitude&quot;, NORTH]]</crs>
+            <resampling>Nearest</resampling>
+            <referencePixelX/>
+            <referencePixelY/>
+            <easting/>
+            <northing/>
+            <orientation/>
+            <pixelSizeX/>
+            <pixelSizeY/>
+            <width/>
+            <height/>
+            <tileSizeX/>
+            <tileSizeY/>
+            <orthorectify>false</orthorectify>
+            <elevationModelName/>
+            <noDataValue>NaN</noDataValue>
+            <includeTiePointGrids>true</includeTiePointGrids>
+            <addDeltaBands>false</addDeltaBands>
+        </parameters>
+    </node>
+    <node id="Write">
+        <operator>Write</operator>
+        <sources>
+            <sourceProduct refid="BandMerge"/>
+        </sources>
+        <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+            <file>${targetbasePath}</file>
+            <formatName>NetCDF4-BEAM</formatName>
+        </parameters>
+    </node>
+    <applicationData id="Presentation">
+        <Description/>
+        <node id="Read">
+            <displayPosition x="19.0" y="99.0"/>
+        </node>
+        <node id="S2Resampling">
+            <displayPosition x="120.0" y="94.0"/>
+        </node>
+        <node id="Subset">
+            <displayPosition x="378.0" y="133.0"/>
+        </node>
+        <node id="Bi2Op">
+            <displayPosition x="565.0" y="22.0"/>
+        </node>
+        <node id="BiOp">
+            <displayPosition x="563.0" y="56.0"/>
+        </node>
+        <node id="CiOp">
+            <displayPosition x="564.0" y="95.0"/>
+        </node>
+        <node id="RiOp">
+            <displayPosition x="563.0" y="133.0"/>
+        </node>
+        <node id="ArviOp">
+            <displayPosition x="563.0" y="170.0"/>
+        </node>
+        <node id="DviOp">
+            <displayPosition x="565.0" y="206.0"/>
+        </node>
+        <node id="GemiOp">
+            <displayPosition x="565.0" y="243.0"/>
+        </node>
+        <node id="GndviOp">
+            <displayPosition x="561.0" y="282.0"/>
+        </node>
+        <node id="IpviOp">
+            <displayPosition x="565.0" y="317.0"/>
+        </node>
+        <node id="IreciOp">
+            <displayPosition x="565.0" y="350.0"/>
+        </node>
+        <node id="McariOp">
+            <displayPosition x="565.0" y="384.0"/>
+        </node>
+        <node id="Msavi2Op">
+            <displayPosition x="560.0" y="415.0"/>
+        </node>
+        <node id="MsaviOp">
+            <displayPosition x="562.0" y="451.0"/>
+        </node>
+        <node id="MtciOp">
+            <displayPosition x="688.0" y="28.0"/>
+        </node>
+        <node id="Ndi45Op">
+            <displayPosition x="681.0" y="76.0"/>
+        </node>
+        <node id="PssraOp">
+            <displayPosition x="690.0" y="108.0"/>
+        </node>
+        <node id="PviOp">
+            <displayPosition x="694.0" y="146.0"/>
+        </node>
+        <node id="ReipOp">
+            <displayPosition x="694.0" y="182.0"/>
+        </node>
+        <node id="RviOp">
+            <displayPosition x="694.0" y="215.0"/>
+        </node>
+        <node id="S2repOp">
+            <displayPosition x="693.0" y="250.0"/>
+        </node>
+        <node id="SaviOp">
+            <displayPosition x="694.0" y="283.0"/>
+        </node>
+        <node id="TndviOp">
+            <displayPosition x="695.0" y="318.0"/>
+        </node>
+        <node id="TsaviOp">
+            <displayPosition x="695.0" y="348.0"/>
+        </node>
+        <node id="WdviOp">
+            <displayPosition x="693.0" y="387.0"/>
+        </node>
+        <node id="BiophysicalOp">
+            <displayPosition x="681.0" y="425.0"/>
+        </node>
+        <node id="BandMerge">
+            <displayPosition x="1059.0" y="206.0"/>
+        </node>
+        <node id="Reproject">
+            <displayPosition x="258.0" y="126.0"/>
+        </node>
+        <node id="Write">
+            <displayPosition x="1311.0" y="214.0"/>
+        </node>
+    </applicationData>
+</graph>
