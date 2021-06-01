@@ -1,6 +1,6 @@
 # Gross primary production estimated from Sentinel-2 #
 
-This is the code repository for the scientific manuscript: "Gross primary production estimated from Sentinel-2". For further details see: XXXX
+This is the code repository for the scientific manuscript: "Estimating gross primary production from Sentinel-2". For further details see: XXXX
 
 1. Example scripts for the post-processing of Sentinel-2 images are presented in the [post-processing](post-processing) folder.
 
