@@ -1,4 +1,4 @@
-# Gross primary production estimated from Sentinel-2 #
+# Estimating gross primary production from Sentinel-2 #
 
 This is the code repository for the scientific manuscript: "Estimating gross primary production from Sentinel-2". For further details see: XXXX
 
