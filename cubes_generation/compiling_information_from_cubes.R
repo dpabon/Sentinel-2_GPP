@@ -7,6 +7,8 @@ library(abind)
 library(tidyverse)
 library(outliers)
 
+setwd("~/l1_work3/cube_f/")
+
 outlier.var <- function(x){
   y <- x[!is.na(x)]
   y.good <- which(scores(y, type = "z", prob = 0.99) == F)
@@ -23,7 +25,10 @@ useful.inf  <- function(x, y, mask){
   return((length(which(is.element(y, x))))  / l.mask)
 }
 
+sites <- read_csv("~/dpabon/data_EFPS_ML/summary_ec_sites.csv")
 
+sites <- sites %>%
+  filter(!igbp %in% c("URB", "WSA", "WAT"))
 
 site_name <- c("Be-Bra",
                "BE-Lon",
